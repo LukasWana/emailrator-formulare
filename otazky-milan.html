@@ -1,0 +1,219 @@
+<title>Otázky pro Milana</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@90,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root {
+  --bg: #f3f5f4; --surface: #ffffff; --ink: #1a1f21; --muted: #5a6569; --line: #d7dddc;
+  --accent: #00747f; --accent-soft: #dff0f1; --accent-ink: #ffffff;
+  --ok: #2d7a3c; --ok-soft: #e3f1e5;
+  --display: "Archivo", "Arial Narrow", Arial, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", Roboto, Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #111516; --surface: #1a2022; --ink: #e6ebeb; --muted: #97a3a6; --line: #2b3336;
+    --accent: #4ec2cf; --accent-soft: #143439; --accent-ink: #0b1a1c; --ok: #6cc47c; --ok-soft: #16301b;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #111516; --surface: #1a2022; --ink: #e6ebeb; --muted: #97a3a6; --line: #2b3336;
+  --accent: #4ec2cf; --accent-soft: #143439; --accent-ink: #0b1a1c; --ok: #6cc47c; --ok-soft: #16301b;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 19px; }
+[hidden] { display: none !important; } /* obal artefaktu to má; bez něj lokální náhled ukázal „Jinak“ i „Hotovo“ naráz */
+.obal { max-width: 680px; margin: 0 auto; padding-inline: 16px; padding-block: 24px 48px; display: flex; flex-direction: column; gap: 28px; }
+.stav { display: flex; justify-content: space-between; gap: 12px; font-size: 18px; color: var(--muted); margin-bottom: -18px; }
+.pruh { height: 10px; border-radius: 5px; background: var(--line); overflow: hidden; }
+.pruh > div { height: 100%; width: 0; background: var(--ok); transition: width .3s; }
+@media (prefers-reduced-motion: reduce) { .pruh > div { transition: none; } }
+h1 { font-family: var(--display); font-stretch: 90%; font-weight: 700; font-size: clamp(26px, 5vw, 34px); line-height: 1.2;
+  margin: 0; text-wrap: balance; }
+.volby { display: flex; flex-direction: column; gap: 12px; }
+button { font: inherit; cursor: pointer; }
+.volba { text-align: left; font-size: 22px; font-weight: 500; padding: 18px 22px; border-radius: 12px;
+  border: 2px solid var(--line); background: var(--surface); color: var(--ink); }
+.volba:hover { border-color: var(--accent); }
+.volba:focus-visible, .dole button:focus-visible, textarea:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.volba.vybrana { border-color: var(--ok); background: var(--ok-soft); font-weight: 600; }
+.volba.vybrana::after { content: "  ✓"; color: var(--ok); }
+.volba.slaba { font-size: 19px; color: var(--muted); }
+textarea { font: inherit; font-size: 20px; padding: 14px; border-radius: 12px; border: 2px solid var(--accent);
+  background: var(--surface); color: var(--ink); min-height: 90px; width: 100%; box-sizing: border-box; }
+.ulozit { font-size: 20px; font-weight: 600; padding: 14px 22px; border-radius: 12px; border: 0;
+  background: var(--accent); color: var(--accent-ink); align-self: flex-start; }
+.dole { display: flex; justify-content: space-between; gap: 12px; }
+.dole button { font-size: 18px; padding: 10px 16px; border-radius: 10px; border: 0; background: transparent; color: var(--muted); }
+.dole button:hover { color: var(--ink); }
+.dole button:disabled { visibility: hidden; }
+.hlaska { font-size: 17px; color: var(--muted); min-height: 1.4em; }
+.konec { text-align: center; display: flex; flex-direction: column; gap: 16px; align-items: center; padding-block: 40px; }
+.konec .fajfka { font-size: 64px; color: var(--ok); line-height: 1; }
+</style>
+
+<div class="obal">
+  <div class="stav"><span id="kde"></span><span id="zbyva"></span></div>
+  <div class="pruh" aria-hidden="true"><div id="pruh"></div></div>
+
+  <section id="otazka">
+    <h1 id="text"></h1>
+  </section>
+  <div class="volby" id="volby"></div>
+  <div id="jinak" hidden style="display:flex;flex-direction:column;gap:12px">
+    <textarea id="jinak-text" aria-label="Vaše odpověď"></textarea>
+    <button class="ulozit" id="jinak-ulozit" type="button">Uložit odpověď</button>
+  </div>
+  <div class="hlaska" id="hlaska" role="status"></div>
+  <div class="dole">
+    <button type="button" id="zpet">← Zpět</button>
+    <button type="button" id="poslat" hidden>Odeslat hotové</button>
+    <button type="button" id="dalsi">Přeskočit →</button>
+  </div>
+
+  <section class="konec" id="konec" hidden>
+    <div class="fajfka">✓</div>
+    <h1>Hotovo, děkujeme.</h1>
+    <div id="odeslat" hidden></div>
+    <button class="ulozit" type="button" id="znovu" style="align-self:center">Projít odpovědi znovu</button>
+  </section>
+</div>
+
+<script>
+const Q = [{"id": "p20", "c": 520, "oblast": "postup", "otazka": "Popište postup zakázky od poptávky po fakturu: jednotlivé kroky a kdo který dělá (produkční, grafik, DTP, výroba, montáž, dopravce).", "moznosti": [], "n": 0, "priklady": []}, {"id": "p19", "c": 519, "oblast": "postup", "otazka": "Kdo rozhoduje o čem: cena, výběr materiálu, schválení grafiky, termín, doprava, výjimky pro klienta? Napište ke každému.", "moznosti": [], "n": 0, "priklady": []}, {"id": "p02", "c": 502, "oblast": "povinné údaje", "otazka": "Deska: co musí být v poptávce, aby šla do výroby? Napište výčet (např. rozměr, materiál, tloušťka, počet, povrch, termín).", "moznosti": [], "n": 0, "priklady": []}, {"id": "p03", "c": 503, "oblast": "povinné údaje", "otazka": "Polep vozidla: co musí být v poptávce, aby šel do výroby? Napište výčet.", "moznosti": [], "n": 0, "priklady": []}, {"id": "p21", "c": 521, "oblast": "povinné údaje", "otazka": "Co z poptávky zákazníci nejčastěji nenapíšou a musíte doptávat? Napište podle druhu zakázky (tisk, banner, deska, polep, sklo, instalace).", "moznosti": [], "n": 0, "priklady": []}, {"id": "p01", "c": 501, "oblast": "stroj", "otazka": "Tabulka největších formátů strojů (plotr, laser, fréza, Chuan) a tloušťek materiálu: kde je? Napište odkaz nebo pošlete soubor.", "moznosti": [], "n": 0, "priklady": []}, {"id": "p04", "c": 504, "oblast": "dokončení", "otazka": "Banner: od jaké velikosti se lemuje vařením a kdy stačí bez lemu?", "moznosti": [], "n": 0, "priklady": []}, {"id": "p05", "c": 505, "oblast": "dokončení", "otazka": "Lemování banneru: kde se dělá?", "moznosti": ["u nás", "externě (Astron)", "podle velikosti nebo termínu (napište)", "jinak (napište)"], "n": 0, "priklady": []}, {"id": "p06", "c": 506, "oblast": "dokončení", "otazka": "Rozteč ok na banneru, když ji zákazník neurčí:", "moznosti": ["po 30 cm", "po 50 cm", "neurčujeme, vždy se ptáme zákazníka", "jinak (napište)"], "n": 0, "priklady": []}, {"id": "p07", "c": 507, "oblast": "varianta", "otazka": "Deska bez udání povrchu: co se dosadí?", "moznosti": ["lesk", "mat", "neurčujeme, vždy se ptáme zákazníka", "jinak (napište)"], "n": 0, "priklady": []}, {"id": "p08", "c": 508, "oblast": "služby", "otazka": "Které práce jdou ven a komu (tiskárny, lemování, nátěry, omítky, kovové práce, ofset)? A je to v zakázce položka s cenou pro zákazníka, nebo jen náš náklad?", "moznosti": [], "n": 0, "priklady": []}, {"id": "p09", "c": 509, "oblast": "položky", "otazka": "Navrhujeme: převod z e-mailu položku „Režie“ sám nevytváří, doplňuje ji produkční. Co do Režie patří a kdy se dává?", "moznosti": ["sedí", "nesedí (napište jak)", "jinak (napište)"], "n": 0, "priklady": []}, {"id": "p10", "c": 510, "oblast": "položky", "otazka": "Navrhujeme: položku „Produkce“ převod sám nevytváří, doplňuje ji produkční. Co v ní je a kdy se dává?", "moznosti": ["sedí", "nesedí (napište jak)", "jinak (napište)"], "n": 0, "priklady": []}, {"id": "p11", "c": 511, "oblast": "položky", "otazka": "Navrhujeme: „Zaměření“ a „Grafika“ jsou dvě samostatné položky. Sedí to?", "moznosti": ["sedí", "nesedí (napište jak)", "jinak (napište)"], "n": 0, "priklady": []}, {"id": "p12", "c": 512, "oblast": "položky", "otazka": "Navrhujeme: „Instalace“ a „Doprava“ jsou dvě samostatné položky, nikdy jedna společná. Sedí to?", "moznosti": ["sedí", "nesedí (napište jak)", "jinak (napište)"], "n": 0, "priklady": []}, {"id": "p13", "c": 513, "oblast": "položky", "otazka": "Navrhujeme: „Deinstalace“ (sundání polepu) je samostatná položka, oceněná zvlášť. Sedí to a jak se oceňuje (hodinově, za m², paušálem)?", "moznosti": ["sedí", "nesedí (napište jak)", "jinak (napište)"], "n": 0, "priklady": []}, {"id": "p14", "c": 514, "oblast": "položky", "otazka": "Nátěr a lak: kdo vybírá odstín a lesk (RAL, lak) a co se do zakázky zapisuje jako materiál a co jako práce?", "moznosti": [], "n": 0, "priklady": []}, {"id": "p16", "c": 516, "oblast": "tisková data", "otazka": "Co se u zakázky počítá za „tisková data“ (PDF návrhu, PSD, vektor, název přílohy)? A kdy je potřeba formát doptávat?", "moznosti": [], "n": 0, "priklady": []}, {"id": "p17", "c": 517, "oblast": "výroba", "otazka": "Typické lhůty od dodání dat po hotovo: samolepka, banner, deska, polep vozidla, polep skla, instalace. Napište ke každému rozmezí a co ho prodlužuje.", "moznosti": [], "n": 0, "priklady": []}, {"id": "p18", "c": 518, "oblast": "výroba", "otazka": "Které materiály jsou vždy skladem a které se objednávají na zakázku? Napište seznam.", "moznosti": [], "n": 0, "priklady": []}, {"id": "p24", "c": 524, "oblast": "klienti", "otazka": "Kteří klienti mají zvláštní pravidla (paušál, cena, doprava, povinný postup)? Napište klienta a pravidlo.", "moznosti": [], "n": 0, "priklady": []}, {"id": "p25", "c": 525, "oblast": "postup", "otazka": "Co dalšího se ve firmě dělá a v tomto dotazníku nebylo? Napište i to, co se děje zřídka.", "moznosti": [], "n": 0, "priklady": []}];
+// Jen text pro člověka: technické poznámky v závorkách pryč, „jiné / jinak (napište)“ nahrazuje tlačítko „Jinak — napíšu“
+const cista = (m) => m.replace(" (demo)", "").replace(" (z wall2)", "");
+const volbyOtazky = (q) => q.moznosti.filter((m) => !m.startsWith("jiné") && !m.startsWith("jinak")).map(cista);
+
+// Odpovědi bez přihlášení do Claude (vkládá `bez_prihlaseni.vloz` na místo značky v šabloně stránky pro produkční).
+// Do db artifactu smí zapisovat jen přihlášený Contributor. Kdo stránku jen otevřel odkazem, odpovídá místně:
+// odpovědi drží prohlížeč (localStorage) a `ukaz` dá tlačítko, které otevře novou zprávu v Gmailu (produkční pracují
+// v Chrome s Gmailem) s řádky „id: volba | upřesnění“ → `bez_prihlaseni.py odpovedi`. Záloha: text ke zkopírování.
+const bezPrihlaseni = (klic, predmet) => {
+  const KAM = "qwanap@gmail.com";  // schránka, kterou čte `gmail_sync.py hist` (adresa na stránce: pokyn uživatele 30. 9.)
+  const MAX_URL = 6000;            // delší adresu Gmail nemusí přijmout → jen kopírování
+  const el = (tag, styl, text) => { const e = document.createElement(tag); e.style.cssText = styl; if (text != null) e.textContent = text; return e; };
+  return {
+    nacti() { try { return JSON.parse(localStorage.getItem(klic)) || {}; } catch (e) { return {}; } },
+    uloz(stav) { try { localStorage.setItem(klic, JSON.stringify(stav)); } catch (e) {} },
+    text(polozky, stav, pole) {
+      return polozky.filter((p) => stav[p.id]).map((p) => {
+        const a = stav[p.id];
+        return `${p.id}: ${a[pole] || ""}${a.text ? " | " + a.text.replace(/\s+/g, " ") : ""}`;
+      }).join("\n") + "\n— konec —";  // poslední řádek: co je v e-mailu pod ním, k odpovědím nepatří
+    },
+    ukaz(kam, text) {
+      const url = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(KAM)}&su=${encodeURIComponent(predmet)}&body=${encodeURIComponent(text)}`;
+      const jde = url.length <= MAX_URL;
+      const a = el("a", "font-size:20px;font-weight:600;padding:14px 22px;border-radius:12px;background:var(--accent);color:var(--accent-ink);text-decoration:none", "Odeslat odpovědi e-mailem");
+      a.href = url; a.target = "_blank"; a.rel = "noopener"; a.id = "bp-mailem";
+      const p = el("p", "margin:0;font-size:17px;color:var(--muted)",
+        (jde ? "Neotevřel se e-mail? " : "") + `Zkopírujte odpovědi a pošlete je na ${KAM}.`);
+      const t = el("textarea", "font:inherit;font-size:16px;padding:14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);min-height:220px;width:100%;box-sizing:border-box");
+      t.readOnly = true; t.value = text; t.id = "bp-souhrn"; t.setAttribute("aria-label", "Vaše odpovědi");
+      const b = el("button", "font:inherit;font-size:18px;padding:10px 16px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer", "Zkopírovat odpovědi");
+      b.type = "button";
+      const s = el("div", "font-size:17px;color:var(--muted);min-height:1.4em");
+      s.setAttribute("role", "status");
+      b.onclick = async () => {
+        let ok = false;
+        try { await navigator.clipboard.writeText(t.value); ok = true; } catch (e) {
+          t.focus(); t.select();
+          try { ok = document.execCommand("copy"); } catch (e2) {}
+        }
+        s.textContent = ok ? "Zkopírováno. Vložte do e-mailu." : "Text je označený — zkopírujte ho (Ctrl+C) a vložte do e-mailu.";
+      };
+      kam.style.cssText = "display:flex;flex-direction:column;gap:12px;align-items:center;width:100%";
+      kam.replaceChildren(...(jde ? [a] : []), p, t, b, s);
+    },
+  };
+};
+
+// Dva režimy: přihlášený Contributor ukládá do db `odpovedi`; kdo jen otevřel odkaz (bez přihlášení), odpovídá místně.
+const bp = bezPrihlaseni("otazky-milan", "Otázky – Milan – odpovědi");
+let odpovedi = bp.nacti(), db = null, user = null, mistni = true, lzeZapisovat = true, i = 0, konec = false;
+const $ = (id) => document.getElementById(id);
+
+function prvniNezodpovezena(od) {
+  for (let d = 0; d < Q.length; d++) { const k = (od + d) % Q.length; if (!odpovedi[Q[k].id]) return k; }
+  return -1;
+}
+
+function vykresli() {
+  const hotovo = Q.filter((q) => odpovedi[q.id]).length;
+  $("pruh").style.width = (Q.length ? 100 * hotovo / Q.length : 0) + "%";
+  const zbyva = Q.length - hotovo;
+  $("kde").textContent = konec ? "" : `Otázka ${i + 1} z ${Q.length}`;
+  $("zbyva").textContent = zbyva === 0 ? "Vše zodpovězeno" : zbyva === 1 ? "Zbývá 1 otázka" : zbyva < 5 ? `Zbývají ${zbyva} otázky` : `Zbývá ${zbyva} otázek`;
+  const ukazKonec = konec;
+  for (const id of ["otazka", "volby", "hlaska"]) $(id).hidden = ukazKonec;
+  document.querySelector(".dole").hidden = ukazKonec;
+  $("konec").hidden = !ukazKonec;
+  $("odeslat").hidden = !(ukazKonec && mistni);
+  if (ukazKonec) { $("jinak").hidden = true; if (mistni) bp.ukaz($("odeslat"), bp.text(Q, odpovedi, "volba")); return; }
+  const q = Q[i], a = odpovedi[q.id] || {};
+  $("text").textContent = q.otazka;
+  const box = $("volby");
+  box.replaceChildren();
+  for (const m of [...volbyOtazky(q), "Nevím"]) {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "volba" + (m === "Nevím" ? " slaba" : "") + (a.volba === m ? " vybrana" : "");
+    b.textContent = m; b.disabled = !lzeZapisovat;
+    b.onclick = () => uloz(m, "");
+    box.append(b);
+  }
+  const j = document.createElement("button");
+  j.type = "button"; j.className = "volba slaba" + (a.volba === "jinak" ? " vybrana" : "");
+  j.textContent = "Jinak — napíšu"; j.disabled = !lzeZapisovat;
+  j.onclick = () => { $("jinak").hidden = false; $("jinak-text").value = a.text || ""; $("jinak-text").focus(); };
+  box.append(j);
+  $("jinak").hidden = a.volba !== "jinak";
+  if (a.volba === "jinak") $("jinak-text").value = a.text || "";
+  $("poslat").hidden = !(mistni && Object.keys(odpovedi).length);
+  $("zpet").disabled = i === 0;
+  $("dalsi").disabled = i >= Q.length - 1;
+}
+
+async function uloz(volba, text) {
+  const q = Q[i];
+  if (!mistni) {
+    $("hlaska").textContent = "Ukládám…";
+    try {
+      const kdo = user ? await user.id() : null;
+      await db.collection("odpovedi").doc(q.id).set({ cislo: q.c, otazka: q.otazka, volba, text, kdo: kdo || "", kdy: new Date().toISOString() });
+    } catch (e) { mistni = true; }  // zápis odmítnut → odpověď zůstane v prohlížeči a pošle se e-mailem
+  }
+  odpovedi[q.id] = { volba, text };
+  if (mistni) bp.uloz(odpovedi);
+  $("hlaska").textContent = "";
+  const k = prvniNezodpovezena(i + 1);
+  if (k < 0) konec = true; else i = k;
+  vykresli();
+}
+
+$("jinak-ulozit").onclick = () => { const t = $("jinak-text").value.trim(); if (t) uloz("jinak", t); else $("jinak-text").focus(); };
+$("zpet").onclick = () => { if (i > 0) { i--; vykresli(); } };
+$("dalsi").onclick = () => { if (i < Q.length - 1) { i++; vykresli(); } };
+$("poslat").onclick = () => { konec = true; vykresli(); };
+$("znovu").onclick = () => { konec = false; i = 0; vykresli(); };
+
+{ const k = prvniNezodpovezena(0); if (k < 0) konec = Object.keys(odpovedi).length > 0; else i = k; }
+vykresli();
+
+(async () => {
+  const c = window.claude;
+  if (!c?.use) return;
+  const [d, u] = await Promise.all([c.use("db"), c.use("user")]);
+  if (!d) return;
+  const smi = u ? await u.can("data.write") : null;
+  if (smi === false || Object.keys(odpovedi).length) return;  // bez práva zápisu, nebo už odpovídá místně
+  db = d; user = u; mistni = false;
+  let prvni = true;
+  db.collection("odpovedi").onSnapshot((snap) => {
+    odpovedi = {};
+    for (const doc of snap.docs) if (doc.exists) odpovedi[doc.id] = doc.data();
+    if (prvni) { prvni = false; const k = prvniNezodpovezena(0); if (k < 0) konec = true; else i = k; }
+    vykresli();
+  }, () => { $("hlaska").textContent = "Spojení s odpověďmi se přerušilo. Obnovte stránku."; });
+})();
+</script>
