@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <meta charset="utf-8">
-<meta name="robots" content="noindex, nofollow">
 <title>Otázky pro Martina</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@90,700&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
@@ -118,7 +117,7 @@ const bezPrihlaseni = (klic, predmet) => {
 };
 
 const MATERIALY = [{"id": "t01", "nazev": "bílá samolepka", "pozn": "s tiskem"}, {"id": "t02", "nazev": "čirá samolepka", "pozn": "s tiskem"}, {"id": "t03", "nazev": "litá fólie", "pozn": "polepy aut"}, {"id": "t04", "nazev": "OWV", "pozn": "perforovaná do oken"}, {"id": "t05", "nazev": "translucent", "pozn": ""}, {"id": "t06", "nazev": "backlight", "pozn": ""}, {"id": "t07", "nazev": "reflexní fólie", "pozn": ""}, {"id": "t08", "nazev": "tisková fólie do −10 °C", "pozn": ""}, {"id": "t09", "nazev": "magnetka", "pozn": ""}, {"id": "t10", "nazev": "podlahová grafika", "pozn": ""}, {"id": "t11", "nazev": "tapeta", "pozn": ""}, {"id": "t12", "nazev": "banner a plachta", "pozn": ""}, {"id": "t13", "nazev": "rollup", "pozn": "potištěná část"}, {"id": "t14", "nazev": "polep okna a výlohy", "pozn": ""}];
-const OTAZKY = [{"id": "t91", "otazka": "Umí UV role tisknout oboustranně (4/4)?", "moznosti": ["ano", "ne, jen UV deska", "jinak"]}, {"id": "t92", "otazka": "Bílý podtisk (čirá fólie, plexi): kdy se dává a kdo to rozhoduje?"}, {"id": "t93", "otazka": "Co se u tisku pořád zapomíná nebo se musí doptávat?"}, {"id": "t94", "otazka": "Co by se nikdy nemělo v poptávce brát jako standard?"}, {"id": "t95", "otazka": "Oka na banneru, když zákazník rozteč neurčí:", "moznosti": ["po 30 cm", "po 50 cm", "vždy se ptáme zákazníka", "jinak"]}, {"id": "t96", "otazka": "Polep vozidla bez udání materiálu: co se bere?", "moznosti": ["litá fólie + laminace", "polymerní fólie + laminace", "vždy se ptáme zákazníka", "jinak"]}, {"id": "t97", "otazka": "Deska bez udání povrchu: lesk, nebo mat?", "moznosti": ["lesk", "mat", "vždy se ptáme zákazníka", "jinak"]}, {"id": "t98", "otazka": "Dibond 2 mm a 3 mm: který se bere, když zákazník neřekne (tloušťka hliníku, dodavatel)?"}, {"id": "t99", "otazka": "Když v zakázce stojí jen „polymer tisk bílý“ nebo „fólie tisk čirý“ bez značky: kterou fólii dáš?"}, {"id": "t100", "otazka": "Vyjmenuj všechny tiskové stroje a řezací stroje. U každého: co na něm tiskneš nebo řežeš, největší šířka a tloušťka, co na něm nejde."}, {"id": "t101", "otazka": "Která práce se dělá ručně a jak (např. oboustranný tisk na roli, lepení, skládání z více kusů)?"}, {"id": "t102", "otazka": "Co u vás pořád chybí nebo se zdržuje u dodavatelů materiálu (jaký materiál, kdo dodává, jak dlouho)?"}, {"id": "t103", "otazka": "Rollup a další kompletace (stojany, rámy, textil): co je v základní dodávce a co se dokupuje zvlášť?"}, {"id": "t104", "otazka": "Tapeta a podlahová grafika: na čem se tiskne, jaká je ochranná vrstva a co se musí zeptat zákazníka?"}, {"id": "t105", "otazka": "Kdo a jak kontroluje hotový tisk před odesláním (barva, ořez, počty)? Co se vrací nejčastěji?"}, {"id": "t106", "otazka": "Typické lhůty od dodání dat po hotovo (samolepka, banner, deska, polep vozidla, polep skla). Napiš ke každému rozmezí a co ho prodlužuje."}, {"id": "t107", "otazka": "Co děláš na zakázku, ale nepovažuješ za běžné (a co naopak neumíme vyrobit)?"}, {"id": "t108", "otazka": "Co dalšího se v tisku a finiši děje a nebylo v dotazníku? Napiš i to, co se děje zřídka."}];
+const OTAZKY = [{"id": "t91", "otazka": "Umí UV role tisknout oboustranně (4/4)?", "moznosti": ["ano", "ne, jen UV deska", "jinak"]}, {"id": "t92", "otazka": "Bílý podtisk (čirá fólie, plexi): kdy se dává? (zaškrtněte vše, co platí)", "vice": true, "moznosti": ["vždy, když zákazník neřekne jinak", "jen na čirou fólii", "jen na plexi", "jen na přání zákazníka", "rozhoduje tiskař podle podkladů"]}, {"id": "t93", "otazka": "Co se u tisku pořád zapomíná nebo se musí doptávat?"}, {"id": "t94", "otazka": "Co by se nikdy nemělo v poptávce brát jako standard?"}, {"id": "t95", "otazka": "Oka na banneru, když zákazník rozteč neurčí:", "moznosti": ["po 30 cm", "po 50 cm", "vždy se ptáme zákazníka", "jinak"]}, {"id": "t96", "otazka": "Polep vozidla bez udání materiálu: co se bere?", "moznosti": ["litá fólie + laminace", "polymerní fólie + laminace", "vždy se ptáme zákazníka", "jinak"]}, {"id": "t97", "otazka": "Deska bez udání povrchu: lesk, nebo mat?", "moznosti": ["lesk", "mat", "vždy se ptáme zákazníka", "jinak"]}, {"id": "t98", "otazka": "Dibond 2 mm a 3 mm: který se bere, když zákazník neřekne (tloušťka hliníku, dodavatel)?"}, {"id": "t99", "otazka": "Když v zakázce stojí jen „polymer tisk bílý“ nebo „fólie tisk čirý“ bez značky: kterou fólii dáš?"}, {"id": "t100", "otazka": "Vyjmenuj všechny tiskové stroje a řezací stroje. U každého: co na něm tiskneš nebo řežeš, největší šířka a tloušťka, co na něm nejde."}, {"id": "t101", "otazka": "Která práce se dělá ručně a jak (např. oboustranný tisk na roli, lepení, skládání z více kusů)?"}, {"id": "t102", "otazka": "Co u vás pořád chybí nebo se zdržuje u dodavatelů materiálu (jaký materiál, kdo dodává, jak dlouho)?"}, {"id": "t103", "otazka": "Rollup a další kompletace (stojany, rámy, textil): co je v základní dodávce a co se dokupuje zvlášť?"}, {"id": "t104", "otazka": "Tapeta a podlahová grafika: na čem se tiskne, jaká je ochranná vrstva a co se musí zeptat zákazníka?"}, {"id": "t105", "otazka": "Kdo a jak kontroluje hotový tisk před odesláním (barva, ořez, počty)? Co se vrací nejčastěji?"}, {"id": "t106", "otazka": "Typické lhůty od dodání dat po hotovo (samolepka, banner, deska, polep vozidla, polep skla). Napiš ke každému rozmezí a co ho prodlužuje."}, {"id": "t107", "otazka": "Co děláš na zakázku, ale nepovažuješ za běžné (a co naopak neumíme vyrobit)?"}, {"id": "t108", "otazka": "Co dalšího se v tisku a finiši děje a nebylo v dotazníku? Napiš i to, co se děje zřídka."}, {"id": "t109", "otazka": "Magnetka s potiskem: jakou tloušťku bereš, když zákazník nic neřekne?", "moznosti": ["bílá 0,4 mm", "bílá 0,6 mm", "bílá 0,85 mm", "hnědá 0,6 mm", "jinak"]}, {"id": "t110", "otazka": "Magnetka se potiskuje jako role, nebo jako deska?", "moznosti": ["UV role", "UV deska", "jinak"]}, {"id": "t111", "otazka": "Na kterém stroji se obvykle tisknou desky (PVC, dibond, kapa)?", "moznosti": ["UV deska", "Colorado", "záleží na materiálu nebo tloušťce", "jinak"]}, {"id": "t112", "otazka": "Samolepky: když zákazník neřekne, jak vyříznout, co je standard?", "moznosti": ["kontura (výsek po tvaru)", "rovný ořez", "vždy se ptáme zákazníka"]}, {"id": "t113", "otazka": "Kde se laminuje vždy, i když to zákazník neřekne? (zaškrtněte vše, co platí)", "vice": true, "moznosti": ["venkovní polep", "podlaha", "auto", "výloha", "interiér", "nikde, jen na přání"]}, {"id": "t114", "otazka": "Polep oken a výloh: jak se tiskne a lepí?", "moznosti": ["zrcadlově, lepí se zevnitř na sklo", "normálně, lepí se zvenku", "s bílým podtiskem", "jinak"]}, {"id": "t115", "otazka": "Pantone nebo RAL: kdy ho musí zákazník dodat a kdy stačí CMYK?", "moznosti": ["vždy u loga a firemních barev", "jen když zákazník trvá na přesné barvě", "stačí CMYK, Pantone nevyžadujeme", "jinak"]}, {"id": "t116", "otazka": "U pískované fólie stojí „IP 02“, „IP 03“, „IP 05“. Je to poslední dvojčíslí kódu IP 78xx (IP 02 = IP 7802)?", "moznosti": ["ano", "ne"]}, {"id": "t117", "otazka": "U samolepky stojí „split“. Co to je?", "moznosti": ["příplatková operace (dělení podkladu)", "varianta materiálu, kterou volí zákazník", "jen pokyn pro výrobu, nic se neúčtuje", "jinak"]}, {"id": "t118", "otazka": "Tloušťka desky, když zákazník nic neřekne: PVC (forex) a plexi. (zaškrtněte vše, co platí)", "vice": true, "moznosti": ["PVC 3 mm", "PVC 5 mm", "plexi 3 mm", "plexi 5 mm", "vždy se ptáme zákazníka"]}, {"id": "t119", "otazka": "Desky: čím se standardně řežou? (zaškrtněte vše, co platí)", "vice": true, "moznosti": ["fréza", "laser", "plotr", "pila", "ručně"]}, {"id": "t120", "otazka": "Desky: rohy.", "moznosti": ["bez zaoblení", "zaoblené, když zákazník neřekne ostré", "podle zakázky"]}];
 const STROJE = ["UV role", "UV deska", "Solvent", "jinde / ručně"];
 const LAM = ["žádná", "monomerická", "polymerická", "litá", "záleží"];
 const bp = bezPrihlaseni("otazky-martin", "Otázky – Martin – odpovědi");
@@ -146,6 +145,24 @@ function chips(id, pole, moznosti) {
   for (const m of moznosti) {
     const b = el("button", "chip" + ((odp[id] || {})[pole] === m ? " vybrana" : ""), m);
     b.type = "button"; b.onclick = () => uloz(id, pole, m); k.append(b);
+  }
+  return k;
+}
+// víc zaškrtnutých možností najednou: uloženo jako „a; b; c“ (stejný tvar jako na stránkách rolí)
+function chipsVice(id, pole, moznosti) {
+  const k = el("div", "chips");
+  const vybrane = ((odp[id] || {})[pole] || "").split("; ").filter(Boolean);
+  for (const m of moznosti) {
+    const b = el("button", "chip" + (vybrane.includes(m) ? " vybrana" : ""), m);
+    b.type = "button";
+    b.onclick = () => {
+      const a = odp[id] || (odp[id] = {});
+      const v = vybrane.includes(m) ? vybrane.filter((x) => x !== m) : [...vybrane, m];
+      if (v.length) a[pole] = v.join("; "); else delete a[pole];
+      if (!vyplneno(a)) delete odp[id];
+      bp.uloz(odp); obnov();
+    };
+    k.append(b);
   }
   return k;
 }
@@ -188,8 +205,9 @@ function vykresli() {
   const o = $("otazky"); o.replaceChildren();
   for (const q of OTAZKY) {
     const r = el("section", "radek"); r.append(el("h3", null, q.otazka));
-    if (q.moznosti) r.append(chips(q.id, "volba", q.moznosti));
-    const a = el("textarea"); a.setAttribute("aria-label", q.otazka); a.placeholder = "Napište, když chcete upřesnit";
+    if (q.moznosti) r.append((q.vice ? chipsVice : chips)(q.id, "volba", q.moznosti));
+    const a = el("textarea"); a.setAttribute("aria-label", q.otazka);
+    a.placeholder = q.moznosti ? "Doplnění vlastním textem (nepovinné)" : "Napište odpověď";
     a.value = (odp[q.id] || {}).text || ""; a.oninput = () => ulozText(q.id, "text", a.value);
     r.append(a); o.append(r);
   }
