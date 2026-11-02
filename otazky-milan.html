@@ -228,10 +228,10 @@ function vykresli() {
     $("chip").hidden = !q.oblast; $("chip").textContent = q.oblast || "";
     const bohataN = (q.doplneni || q.vice) && volbyOtazky(q).length > 0;
     $("navod").hidden = false;
-    $("navod").textContent = !volbyOtazky(q).length ? "Napiš odpověď do políčka a stiskni Uložit."
-      : q.vice ? "Zaškrtni VŠECHNY možnosti, které platí. Pak dole stiskni „Uložit a dál“."
-      : bohataN ? "Klikni na jednu možnost. Chceš-li, připiš doplnění, a stiskni „Uložit a dál“."
-      : "Klikni na jednu možnost — odpověď se sama uloží a půjdeme dál.";
+    $("navod").textContent = !volbyOtazky(q).length ? "Napiš odpověď a stiskni Uložit."
+      : q.vice ? "Zaškrtni vše, co platí, a stiskni Uložit a dál."
+      : bohataN ? "Klikni na jednu možnost a stiskni Uložit a dál."
+      : "Klikni na jednu možnost.";
     for (const id of ["otazka", "volby"]) { $(id).classList.remove("vstup"); void $(id).offsetWidth; $(id).classList.add("vstup"); }
   }
   const box = $("volby");
@@ -247,7 +247,7 @@ function vykresli() {
     $("doplneni-stitek").textContent = q.vice ? "Doplnění nebo jiné možnosti (nepovinné)" : "Doplnění vlastním textem (nepovinné)";
     const prekresli = () => {
       box.querySelectorAll(".volba").forEach((b) => b.classList.toggle("vybrana", vyber.includes(b.dataset.m)));
-      if (HRAVE) $("hlaska").textContent = vyber.length ? `Vybráno: ${vyber.length}${q.vice ? " — můžeš přidat další" : ""}. Pak stiskni „Uložit a dál“.` : "";
+      if (HRAVE) $("hlaska").textContent = vyber.length ? `Vybráno: ${vyber.length}` : "";
     };
     let kb = 0;
     for (const m of [...volbyOtazky(q), "Nevím"]) {
