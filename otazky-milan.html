@@ -85,14 +85,12 @@ textarea { font: inherit; font-size: 20px; padding: 14px; border-radius: 12px; b
 
   <section class="uvod" id="uvod" hidden>
     <h1>Ahoj Milane, tady Lukáš</h1>
-    <p style="margin:0">Čeká tě <span id="uvod-pocet">pár</span> krátkých otázek o tom, jak to ve firmě chodí. Nic se nemůže pokazit, žádná odpověď není špatná. Můžeš kdykoli přestat — odpovědi se pamatují a příště se pokračuje tam, kde jsi skončil.</p>
+    <p style="margin:0"><span id="uvod-pocet">Pár</span> otázek, stačí klikat. Odpovědi se ukládají, můžeš přestat a pokračovat později.</p>
     <ol>
-      <li>Přečti si otázku.</li>
-      <li>Klikni na odpověď, která sedí. U otázek, kde jich může platit víc, zaškrtni všechny a dole stiskni <b>Uložit a dál</b>.</li>
-      <li>Nevíš? Klikni na <b>Nevím</b>. Chceš to říct po svém? Piš do políčka.</li>
-      <li>Na úplném konci stiskni tlačítko <b>Odeslat</b> — jinak se odpovědi ke mně nedostanou.</li>
+      <li>Klikni na odpověď, která sedí. Když jich platí víc, zaškrtni všechny a stiskni <b>Uložit a dál</b>.</li>
+      <li>Nevíš? Klikni na <b>Nevím</b>.</li>
+      <li>Na konci stiskni <b>Odeslat</b>, jinak se odpovědi ke mně nedostanou.</li>
     </ol>
-    <p style="margin:0;color:var(--muted);font-size:17px">Tip: když se spleteš, tlačítkem „← Zpět“ se vrátíš a odpověď změníš.</p>
     <button class="ulozit" id="uvod-start" type="button">Začít</button>
   </section>
   <section id="otazka">
@@ -329,7 +327,7 @@ $("dalsi").onclick = () => { if (i < Q.length - 1) { i++; vykresli(); } };
 $("poslat").onclick = () => { konec = true; vykresli(); };
 $("znovu").onclick = () => { konec = false; i = 0; vykresli(); };
 
-$("uvod-pocet").textContent = Q.length;
+$("uvod-pocet").textContent = Q.length + " " + (Q.length < 5 ? "krátké" : "krátkých");
 $("uvod-start").onclick = () => { uvod = false; vykresli(); };
 document.addEventListener("keydown", (e) => {
   if (!HRAVE || konec || uvod || e.target.tagName === "TEXTAREA" || e.ctrlKey || e.metaKey || e.altKey) return;
