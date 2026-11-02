@@ -85,9 +85,10 @@ textarea { font: inherit; font-size: 20px; padding: 14px; border-radius: 12px; b
 
   <section class="uvod" id="uvod" hidden>
     <h1>Ahoj Milane, tady Lukáš</h1>
-    <p style="margin:0"><span id="uvod-pocet">Pár</span> otázek, stačí klikat. Odpovědi se ukládají, můžeš přestat a pokračovat později.</p>
+    <p style="margin:0">Odpovědi se ukládají, můžeš přestat a pokračovat později.</p>
     <ol>
-      <li>Klikni na odpověď, která sedí. Když jich platí víc, zaškrtni všechny a stiskni <b>Uložit a dál</b>.</li>
+      <li>Klikni na odpověď, která sedí. Když jich platí víc, zaškrtni všechny.</li>
+      <li>Kde je tlačítko <b>Uložit a dál</b>, stiskni ho.</li>
       <li>Nevíš? Klikni na <b>Nevím</b>.</li>
       <li>Na konci stiskni <b>Odeslat</b>.</li>
     </ol>
@@ -327,7 +328,6 @@ $("dalsi").onclick = () => { if (i < Q.length - 1) { i++; vykresli(); } };
 $("poslat").onclick = () => { konec = true; vykresli(); };
 $("znovu").onclick = () => { konec = false; i = 0; vykresli(); };
 
-$("uvod-pocet").textContent = Q.length + " " + (Q.length < 5 ? "krátké" : "krátkých");
 $("uvod-start").onclick = () => { uvod = false; vykresli(); };
 document.addEventListener("keydown", (e) => {
   if (!HRAVE || konec || uvod || e.target.tagName === "TEXTAREA" || e.ctrlKey || e.metaKey || e.altKey) return;
