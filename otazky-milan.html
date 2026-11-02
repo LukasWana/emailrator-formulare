@@ -84,16 +84,16 @@ textarea { font: inherit; font-size: 20px; padding: 14px; border-radius: 12px; b
   <div class="pruh" aria-hidden="true"><div id="pruh"></div></div>
 
   <section class="uvod" id="uvod" hidden>
-    <h1>Ahoj Milane 👋</h1>
-    <p style="margin:0">Čeká vás pár desítek krátkých otázek o tom, jak to ve firmě chodí. Nic se nemůže pokazit, žádná odpověď není špatná. Můžete kdykoli přestat — odpovědi se pamatují a příště se pokračuje tam, kde jste skončil.</p>
+    <h1>Ahoj Milane, tady Lukáš</h1>
+    <p style="margin:0">Čeká tě <span id="uvod-pocet">pár</span> krátkých otázek o tom, jak to ve firmě chodí. Nic se nemůže pokazit, žádná odpověď není špatná. Můžeš kdykoli přestat — odpovědi se pamatují a příště se pokračuje tam, kde jsi skončil.</p>
     <ol>
-      <li>Přečtěte si otázku.</li>
-      <li>Klikněte na odpověď, která sedí. U otázek, kde jich může platit víc, zaškrtněte všechny a dole stiskněte <b>Uložit a dál</b>.</li>
-      <li>Nevíte? Klikněte na <b>🤷 Nevím</b>. Chcete to říct po svém? Pište do políčka.</li>
-      <li>Na úplném konci stiskněte tlačítko <b>Odeslat</b> — jinak se odpovědi k nám nedostanou.</li>
+      <li>Přečti si otázku.</li>
+      <li>Klikni na odpověď, která sedí. U otázek, kde jich může platit víc, zaškrtni všechny a dole stiskni <b>Uložit a dál</b>.</li>
+      <li>Nevíš? Klikni na <b>Nevím</b>. Chceš to říct po svém? Piš do políčka.</li>
+      <li>Na úplném konci stiskni tlačítko <b>Odeslat</b> — jinak se odpovědi ke mně nedostanou.</li>
     </ol>
-    <p style="margin:0;color:var(--muted);font-size:17px">Tip: mýlíte-li se, tlačítkem „← Zpět“ se vrátíte a odpověď změníte.</p>
-    <button class="ulozit" id="uvod-start" type="button">Začít 🚀</button>
+    <p style="margin:0;color:var(--muted);font-size:17px">Tip: když se spleteš, tlačítkem „← Zpět“ se vrátíš a odpověď změníš.</p>
+    <button class="ulozit" id="uvod-start" type="button">Začít</button>
   </section>
   <section id="otazka">
     <div class="chip" id="chip" hidden></div>
@@ -126,20 +126,18 @@ textarea { font: inherit; font-size: 20px; padding: 14px; border-radius: 12px; b
 </div>
 
 <script>
-const Q = [{"id": "p20", "c": 520, "oblast": "postup", "otazka": "Jaké kroky prochází zakázka od poptávky po fakturu? (zaškrtněte všechny, které se u vás dělají)", "moznosti": ["zákazník pošle poptávku", "produkční udělá cenovou nabídku", "zákazník nabídku odsouhlasí", "zakázka se zapíše do systému", "grafik nebo DTP připraví data", "zákazník schválí grafiku", "tisk", "dokončení (laminace, řezání, výsek)", "výroba z desek a dalších materiálů", "doprava nebo vyzvednutí", "montáž", "předání zákazníkovi", "faktura"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p26", "c": 526, "oblast": "kdo rozhoduje", "otazka": "Kdo rozhoduje o ceně zakázky? (zaškrtněte všechny, kdo se podílejí)", "moznosti": ["produkční", "grafik", "DTP", "výroba", "montáž", "vedení firmy", "klient"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p28", "c": 528, "oblast": "kdo rozhoduje", "otazka": "Kdo schvaluje grafiku? (zaškrtněte všechny, kdo se podílejí)", "moznosti": ["produkční", "grafik", "DTP", "výroba", "montáž", "vedení firmy", "klient"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p31", "c": 531, "oblast": "kdo rozhoduje", "otazka": "Kdo povoluje výjimky pro klienta (sleva, spěch, jiný postup)? (zaškrtněte všechny, kdo se podílejí)", "moznosti": ["produkční", "grafik", "DTP", "výroba", "montáž", "vedení firmy", "klient"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p02", "c": 502, "oblast": "povinné údaje", "otazka": "Deska: co musí být v poptávce, aby šla do výroby? (zaškrtněte vše potřebné)", "moznosti": ["rozměr", "materiál", "tloušťka", "počet kusů", "povrch (lesk / mat)", "barva / potisk", "výsek nebo tvar", "termín", "podklady (grafika)"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p03", "c": 503, "oblast": "povinné údaje", "otazka": "Polep vozidla: co musí být v poptávce, aby šel do výroby? (zaškrtněte vše potřebné)", "moznosti": ["značka a typ vozidla", "rok / provedení vozidla", "které strany a části se lepí", "fotky nebo šablona vozidla", "grafika / podklady", "kde a kdy se lepí", "demontáž starého polepu", "termín"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p21", "c": 521, "oblast": "povinné údaje", "otazka": "Co z poptávky zákazníci nejčastěji nenapíšou a musíte doptávat? (zaškrtněte vše; podle druhu zakázky můžete dopsat dole)", "moznosti": ["rozměr", "počet kusů", "materiál", "termín", "podklady / grafiku", "místo a způsob instalace", "kontakt nebo adresu", "povrch / laminaci"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p01", "c": 501, "oblast": "stroj", "otazka": "Tabulka největších formátů strojů (plotr, laser, fréza, Chuan) a tloušťek materiálu: kde je? Napište odkaz nebo pošlete soubor.", "moznosti": [], "n": 0, "priklady": []}, {"id": "p04", "c": 504, "oblast": "dokončení", "otazka": "Banner: kdy se lemuje vařením?", "moznosti": ["vždy", "jen větší bannery (napište od jaké velikosti)", "jen na venkovní použití", "jen když to zákazník chce", "nikdy, děláme jen oka nebo jiný lem"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p05", "c": 505, "oblast": "dokončení", "otazka": "Lemování banneru: kde se dělá?", "moznosti": ["u nás", "externě (Astron)", "podle velikosti nebo termínu (napište)"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p06", "c": 506, "oblast": "dokončení", "otazka": "Rozteč ok na banneru, když ji zákazník neurčí:", "moznosti": ["po 30 cm", "po 50 cm", "neurčujeme, vždy se ptáme zákazníka"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p07", "c": 507, "oblast": "varianta", "otazka": "Deska bez udání povrchu: co se dosadí?", "moznosti": ["lesk", "mat", "neurčujeme, vždy se ptáme zákazníka"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p08", "c": 508, "oblast": "služby", "otazka": "Které práce jdou ven? (zaškrtněte vše; komu, dopište dole)", "moznosti": ["tisk (tiskárny)", "lemování", "nátěry", "omítky", "kovové práce", "ofset", "doprava"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p09", "c": 509, "oblast": "položky", "otazka": "Navrhujeme: převod z e-mailu položku „Režie“ sám nevytváří, doplňuje ji produkční. Co do Režie patří a kdy se dává?", "moznosti": ["sedí", "nesedí (napište jak)", "jinak (napište)"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p10", "c": 510, "oblast": "položky", "otazka": "Navrhujeme: položku „Produkce“ převod sám nevytváří, doplňuje ji produkční. Co v ní je a kdy se dává?", "moznosti": ["sedí", "nesedí (napište jak)", "jinak (napište)"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p11", "c": 511, "oblast": "položky", "otazka": "Navrhujeme: „Zaměření“ a „Grafika“ jsou dvě samostatné položky. Sedí to?", "moznosti": ["sedí", "nesedí (napište jak)", "jinak (napište)"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p12", "c": 512, "oblast": "položky", "otazka": "Navrhujeme: „Instalace“ a „Doprava“ jsou dvě samostatné položky, nikdy jedna společná. Sedí to?", "moznosti": ["sedí", "nesedí (napište jak)", "jinak (napište)"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p13", "c": 513, "oblast": "položky", "otazka": "Navrhujeme: „Deinstalace“ (sundání polepu) je samostatná položka, oceněná zvlášť. Sedí to?", "moznosti": ["sedí", "nesedí (napište jak)", "jinak (napište)"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p14", "c": 514, "oblast": "položky", "otazka": "Nátěr a lak: kdo vybírá odstín a lesk (RAL, lak)?", "moznosti": ["zákazník", "produkční navrhne a zákazník schválí", "výroba", "grafik"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p34", "c": 534, "oblast": "položky", "otazka": "Nátěr a lak: jak se zapisuje do zakázky?", "moznosti": ["materiál a práce zvlášť", "jedna položka (práce včetně materiálu)", "jen práce, materiál nezapisujeme", "jinak (napište)"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p16", "c": 516, "oblast": "tisková data", "otazka": "Co se u zakázky počítá za „tisková data“? (zaškrtněte vše, co bere)", "moznosti": ["PDF připravené k tisku", "vektor (AI, EPS, CDR)", "PSD nebo TIFF", "JPG nebo PNG", "odkaz ke stažení", "návrh od našeho grafika"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p18", "c": 518, "oblast": "výroba", "otazka": "Které materiály jsou vždy skladem a které se objednávají na zakázku? Napište seznam.", "moznosti": [], "n": 0, "priklady": []}, {"id": "p24", "c": 524, "oblast": "klienti", "otazka": "Kteří klienti mají zvláštní pravidla (paušál, cena, doprava, povinný postup)? Napište klienta a pravidlo.", "moznosti": [], "n": 0, "priklady": []}, {"id": "p25", "c": 525, "oblast": "postup", "otazka": "Co dalšího se ve firmě dělá a v tomto dotazníku nebylo? Napište i to, co se děje zřídka.", "moznosti": [], "n": 0, "priklady": []}];
+const Q = [{"id": "p20", "c": 520, "oblast": "postup", "otazka": "Jaké kroky prochází zakázka od poptávky po fakturu? (zaškrtni všechny, které se ve firmě dělají)", "moznosti": ["zákazník pošle poptávku", "produkční udělá cenovou nabídku", "zákazník nabídku odsouhlasí", "zakázka se zapíše do systému", "grafik nebo DTP připraví data", "zákazník schválí grafiku", "tisk", "dokončení (laminace, řezání, výsek)", "výroba z desek a dalších materiálů", "doprava nebo vyzvednutí", "montáž", "předání zákazníkovi", "faktura"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p26", "c": 526, "oblast": "kdo rozhoduje", "otazka": "Kdo rozhoduje o ceně zakázky? (zaškrtni všechny, kdo se podílejí)", "moznosti": ["produkční", "grafik", "DTP", "výroba", "montáž", "vedení firmy", "klient"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p28", "c": 528, "oblast": "kdo rozhoduje", "otazka": "Kdo schvaluje grafiku? (zaškrtni všechny, kdo se podílejí)", "moznosti": ["produkční", "grafik", "DTP", "výroba", "montáž", "vedení firmy", "klient"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p31", "c": 531, "oblast": "kdo rozhoduje", "otazka": "Kdo povoluje výjimky pro klienta (sleva, spěch, jiný postup)? (zaškrtni všechny, kdo se podílejí)", "moznosti": ["produkční", "grafik", "DTP", "výroba", "montáž", "vedení firmy", "klient"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p02", "c": 502, "oblast": "povinné údaje", "otazka": "Deska: co musí být v poptávce, aby šla do výroby? (zaškrtni vše potřebné)", "moznosti": ["rozměr", "materiál", "tloušťka", "počet kusů", "povrch (lesk / mat)", "barva / potisk", "výsek nebo tvar", "termín", "podklady (grafika)"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p03", "c": 503, "oblast": "povinné údaje", "otazka": "Polep vozidla: co musí být v poptávce, aby šel do výroby? (zaškrtni vše potřebné)", "moznosti": ["značka a typ vozidla", "rok / provedení vozidla", "které strany a části se lepí", "fotky nebo šablona vozidla", "grafika / podklady", "kde a kdy se lepí", "demontáž starého polepu", "termín"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p21", "c": 521, "oblast": "povinné údaje", "otazka": "Co z poptávky zákazníci nejčastěji nenapíšou a musíš doptávat? (zaškrtni vše; podle druhu zakázky můžeš dopsat dole)", "moznosti": ["rozměr", "počet kusů", "materiál", "termín", "podklady / grafiku", "místo a způsob instalace", "kontakt nebo adresu", "povrch / laminaci"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p01", "c": 501, "oblast": "stroj", "otazka": "Tabulka největších formátů strojů (plotr, laser, fréza, Chuan) a tloušťek materiálu: kde je? Napiš odkaz nebo pošli soubor.", "moznosti": [], "n": 0, "priklady": []}, {"id": "p04", "c": 504, "oblast": "dokončení", "otazka": "Banner: kdy se lemuje vařením?", "moznosti": ["vždy", "jen větší bannery (napiš od jaké velikosti)", "jen na venkovní použití", "jen když to zákazník chce", "nikdy, děláme jen oka nebo jiný lem"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p05", "c": 505, "oblast": "dokončení", "otazka": "Lemování banneru: kde se dělá?", "moznosti": ["u nás", "externě (Astron)", "podle velikosti nebo termínu (napiš)"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p06", "c": 506, "oblast": "dokončení", "otazka": "Rozteč ok na banneru, když ji zákazník neurčí:", "moznosti": ["po 30 cm", "po 50 cm", "neurčujeme, vždy se ptáme zákazníka"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p07", "c": 507, "oblast": "varianta", "otazka": "Deska bez udání povrchu: co se dosadí?", "moznosti": ["lesk", "mat", "neurčujeme, vždy se ptáme zákazníka"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p08", "c": 508, "oblast": "služby", "otazka": "Které práce jdou ven? (zaškrtni vše; komu, dopiš dole)", "moznosti": ["tisk (tiskárny)", "lemování", "nátěry", "omítky", "kovové práce", "ofset", "doprava"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p09", "c": 509, "oblast": "položky", "otazka": "Navrhujeme: převod z e-mailu položku „Režie“ sám nevytváří, doplňuje ji produkční. Co do Režie patří a kdy se dává?", "moznosti": ["sedí", "nesedí (napište jak)", "jinak (napište)"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p10", "c": 510, "oblast": "položky", "otazka": "Navrhujeme: položku „Produkce“ převod sám nevytváří, doplňuje ji produkční. Co v ní je a kdy se dává?", "moznosti": ["sedí", "nesedí (napište jak)", "jinak (napište)"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p11", "c": 511, "oblast": "položky", "otazka": "Navrhujeme: „Zaměření“ a „Grafika“ jsou dvě samostatné položky. Sedí to?", "moznosti": ["sedí", "nesedí (napište jak)", "jinak (napište)"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p12", "c": 512, "oblast": "položky", "otazka": "Navrhujeme: „Instalace“ a „Doprava“ jsou dvě samostatné položky, nikdy jedna společná. Sedí to?", "moznosti": ["sedí", "nesedí (napište jak)", "jinak (napište)"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p13", "c": 513, "oblast": "položky", "otazka": "Navrhujeme: „Deinstalace“ (sundání polepu) je samostatná položka, oceněná zvlášť. Sedí to?", "moznosti": ["sedí", "nesedí (napište jak)", "jinak (napište)"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p14", "c": 514, "oblast": "položky", "otazka": "Nátěr a lak: kdo vybírá odstín a lesk (RAL, lak)?", "moznosti": ["zákazník", "produkční navrhne a zákazník schválí", "výroba", "grafik"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p34", "c": 534, "oblast": "položky", "otazka": "Nátěr a lak: jak se zapisuje do zakázky?", "moznosti": ["materiál a práce zvlášť", "jedna položka (práce včetně materiálu)", "jen práce, materiál nezapisujeme", "jinak (napiš)"], "n": 0, "priklady": [], "doplneni": true}, {"id": "p16", "c": 516, "oblast": "tisková data", "otazka": "Co se u zakázky počítá za „tisková data“? (zaškrtni vše, co bere)", "moznosti": ["PDF připravené k tisku", "vektor (AI, EPS, CDR)", "PSD nebo TIFF", "JPG nebo PNG", "odkaz ke stažení", "návrh od našeho grafika"], "n": 0, "priklady": [], "vice": true, "doplneni": true}, {"id": "p18", "c": 518, "oblast": "výroba", "otazka": "Které materiály jsou vždy skladem a které se objednávají na zakázku? Napiš seznam.", "moznosti": [], "n": 0, "priklady": []}, {"id": "p24", "c": 524, "oblast": "klienti", "otazka": "Kteří klienti mají zvláštní pravidla (paušál, cena, doprava, povinný postup)? Napiš klienta a pravidlo.", "moznosti": [], "n": 0, "priklady": []}, {"id": "p25", "c": 525, "oblast": "postup", "otazka": "Co dalšího se ve firmě dělá a v tomto dotazníku nebylo? Napiš i to, co se děje zřídka.", "moznosti": [], "n": 0, "priklady": []}];
 const HRAVE = true;
-const EMOJI = { "výroba": "🏭", "položky": "📦", "povinné údaje": "📝", "montáž": "🛠️", "kdo rozhoduje": "🤔", "služby": "🚚",
-  "místo výroby": "📍", "dokončení": "✨", "postup": "🧭", "tisková data": "🖨️", "stroj": "⚙️", "varianta": "🎨", "klienti": "🤝" };
-const CHVALY = ["Super!", "Jedeme dál! 🚀", "Skvělé!", "Přesně tak! 👌", "Dobrá práce!", "Letí to! ⚡", "Paráda! 🙌", "Odpověď uložena ✔"];
-const ETAPY = { 25: "Čtvrtina za námi! 🎉", 50: "Půlka hotová! 🔥", 75: "Už jen kousek! 🏁" };
+const CHVALY = ["Super!", "Jedeme dál!", "Skvělé!", "Přesně tak!", "Dobrá práce!", "Letí to!", "Paráda!", "Odpověď uložena"];
+const ETAPY = { 25: "Čtvrtina za námi!", 50: "Půlka hotová!", 75: "Už jen kousek!" };
 let zamek = false, posledniPrah = 0, uvod = false;
 if (HRAVE) document.body.classList.add("hrave");
 function vybuch(x, y, n = 12) {
   if (!HRAVE || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const sada = ["🎉", "✨", "⭐", "🎊", "💥"];
+  const sada = ["#00747f", "#2d7a3c", "#e0a800", "#d9534f", "#4ec2cf"];
   for (let k = 0; k < n; k++) {
     const e = document.createElement("span");
-    e.className = "cast"; e.textContent = sada[k % sada.length];
+    e.className = "cast"; e.textContent = "●"; e.style.color = sada[k % sada.length];
     const a = Math.random() * 2 * Math.PI, d = 70 + Math.random() * 110;
     e.style.cssText = `left:${x}px;top:${y}px;--dx:${Math.cos(a) * d}px;--dy:${Math.sin(a) * d - 40}px;--r:${(Math.random() - .5) * 120}deg`;
     document.body.append(e); setTimeout(() => e.remove(), 950);
@@ -148,7 +146,7 @@ function vybuch(x, y, n = 12) {
 const nahodne = (a) => a[Math.floor(Math.random() * a.length)];
 function stitek(b, m, k) {
   if (!HRAVE) { b.textContent = m; return; }
-  const kl = document.createElement("span"); kl.className = "klic"; kl.textContent = m === "Nevím" ? "🤷" : k + 1;
+  const kl = document.createElement("span"); kl.className = "klic"; kl.textContent = m === "Nevím" ? "?" : k + 1;
   const t = document.createElement("span"); t.textContent = m;
   b.append(kl, t);
 }
@@ -162,6 +160,7 @@ const volbyOtazky = (q) => q.moznosti.filter((m) => !m.startsWith("jiné") && !m
 // v Chrome s Gmailem) s řádky „id: volba | upřesnění“ → `bez_prihlaseni.py odpovedi`. Záloha: text ke zkopírování.
 const bezPrihlaseni = (klic, predmet) => {
   const KAM = "qwanap@gmail.com";  // schránka, kterou čte `gmail_sync.py hist` (adresa na stránce: pokyn uživatele 30. 9.)
+  const TY = typeof HRAVE !== "undefined" && HRAVE;  // Milan: autor mu tyká
   const MAX_URL = 6000;            // delší adresu Gmail nemusí přijmout → jen kopírování
   const el = (tag, styl, text) => { const e = document.createElement(tag); e.style.cssText = styl; if (text != null) e.textContent = text; return e; };
   return {
@@ -179,9 +178,9 @@ const bezPrihlaseni = (klic, predmet) => {
       const a = el("a", "font-size:20px;font-weight:600;padding:14px 22px;border-radius:12px;background:var(--accent);color:var(--accent-ink);text-decoration:none", "Odeslat odpovědi e-mailem");
       a.href = url; a.target = "_blank"; a.rel = "noopener"; a.id = "bp-mailem";
       const p = el("p", "margin:0;font-size:17px;color:var(--muted)",
-        (jde ? "Neotevřel se e-mail? " : "") + `Zkopírujte odpovědi a pošlete je na ${KAM}.`);
+        (jde ? "Neotevřel se e-mail? " : "") + (TY ? `Zkopíruj odpovědi a pošli je na ${KAM}.` : `Zkopírujte odpovědi a pošlete je na ${KAM}.`));
       const t = el("textarea", "font:inherit;font-size:16px;padding:14px;border-radius:12px;border:2px solid var(--line);background:var(--surface);color:var(--ink);min-height:220px;width:100%;box-sizing:border-box");
-      t.readOnly = true; t.value = text; t.id = "bp-souhrn"; t.setAttribute("aria-label", "Vaše odpovědi");
+      t.readOnly = true; t.value = text; t.id = "bp-souhrn"; t.setAttribute("aria-label", TY ? "Tvoje odpovědi" : "Vaše odpovědi");
       const b = el("button", "font:inherit;font-size:18px;padding:10px 16px;border-radius:10px;border:2px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer", "Zkopírovat odpovědi");
       b.type = "button";
       const s = el("div", "font-size:17px;color:var(--muted);min-height:1.4em");
@@ -192,7 +191,7 @@ const bezPrihlaseni = (klic, predmet) => {
           t.focus(); t.select();
           try { ok = document.execCommand("copy"); } catch (e2) {}
         }
-        s.textContent = ok ? "Zkopírováno. Vložte do e-mailu." : "Text je označený — zkopírujte ho (Ctrl+C) a vložte do e-mailu.";
+        s.textContent = ok ? (TY ? "Zkopírováno. Vlož do e-mailu." : "Zkopírováno. Vložte do e-mailu.") : (TY ? "Text je označený — zkopíruj ho (Ctrl+C) a vlož do e-mailu." : "Text je označený — zkopírujte ho (Ctrl+C) a vložte do e-mailu.");
       };
       kam.style.cssText = "display:flex;flex-direction:column;gap:12px;align-items:center;width:100%";
       kam.replaceChildren(...(jde ? [a] : []), p, t, b, s);
@@ -228,13 +227,13 @@ function vykresli() {
   $("text").textContent = q.otazka;
   zamek = false;
   if (HRAVE) {
-    $("chip").hidden = !q.oblast; $("chip").textContent = (EMOJI[q.oblast] || "❓") + " " + (q.oblast || "");
+    $("chip").hidden = !q.oblast; $("chip").textContent = q.oblast || "";
     const bohataN = (q.doplneni || q.vice) && volbyOtazky(q).length > 0;
     $("navod").hidden = false;
-    $("navod").textContent = !volbyOtazky(q).length ? "✍️ Napište odpověď do políčka a stiskněte Uložit."
-      : q.vice ? "☑️ Zaškrtněte VŠECHNY možnosti, které platí. Pak dole stiskněte „Uložit a dál“."
-      : bohataN ? "👆 Klikněte na jednu možnost. Chcete-li, připište doplnění, a stiskněte „Uložit a dál“."
-      : "👆 Klikněte na jednu možnost — odpověď se sama uloží a půjdeme dál.";
+    $("navod").textContent = !volbyOtazky(q).length ? "Napiš odpověď do políčka a stiskni Uložit."
+      : q.vice ? "Zaškrtni VŠECHNY možnosti, které platí. Pak dole stiskni „Uložit a dál“."
+      : bohataN ? "Klikni na jednu možnost. Chceš-li, připiš doplnění, a stiskni „Uložit a dál“."
+      : "Klikni na jednu možnost — odpověď se sama uloží a půjdeme dál.";
     for (const id of ["otazka", "volby"]) { $(id).classList.remove("vstup"); void $(id).offsetWidth; $(id).classList.add("vstup"); }
   }
   const box = $("volby");
@@ -250,7 +249,7 @@ function vykresli() {
     $("doplneni-stitek").textContent = q.vice ? "Doplnění nebo jiné možnosti (nepovinné)" : "Doplnění vlastním textem (nepovinné)";
     const prekresli = () => {
       box.querySelectorAll(".volba").forEach((b) => b.classList.toggle("vybrana", vyber.includes(b.dataset.m)));
-      if (HRAVE) $("hlaska").textContent = vyber.length ? `Vybráno: ${vyber.length}${q.vice ? " — můžete přidat další" : ""}. Pak stiskněte „Uložit a dál“.` : "";
+      if (HRAVE) $("hlaska").textContent = vyber.length ? `Vybráno: ${vyber.length}${q.vice ? " — můžeš přidat další" : ""}. Pak stiskni „Uložit a dál“.` : "";
     };
     let kb = 0;
     for (const m of [...volbyOtazky(q), "Nevím"]) {
@@ -287,7 +286,7 @@ function vykresli() {
   }
   const j = document.createElement("button");
   j.type = "button"; j.className = "volba slaba" + (a.volba === "jinak" ? " vybrana" : "");
-  j.textContent = HRAVE ? "✍️ Jinak — napíšu vlastními slovy" : "Jinak — napíšu"; j.disabled = !lzeZapisovat;
+  j.textContent = HRAVE ? "Jinak — napíšu vlastními slovy" : "Jinak — napíšu"; j.disabled = !lzeZapisovat;
   j.onclick = () => { $("jinak").hidden = false; $("jinak-text").value = a.text || ""; $("jinak-text").focus(); };
   box.append(j);
   $("jinak").hidden = a.volba !== "jinak";
@@ -315,12 +314,12 @@ async function uloz(volba, text) {
   if (k < 0) konec = true; else i = k;
   vykresli();
   $("hlaska").textContent = HRAVE && prah ? ETAPY[prah] : "";
-  if (HRAVE && konec) { $("konec-nadpis").textContent = "Hotovo! Jste hvězda ⭐"; vybuch(innerWidth / 2, innerHeight / 3, 40); }
+  if (HRAVE && konec) { $("konec-nadpis").textContent = "Hotovo! Díky, Milane."; vybuch(innerWidth / 2, innerHeight / 3, 40); }
 }
 
 $("doplneni-ulozit").onclick = () => {
   const t = $("doplneni-text").value.trim();
-  if (!vyber.length && !t) { $("hlaska").textContent = "Vyberte možnost nebo napište doplnění."; return; }
+  if (!vyber.length && !t) { $("hlaska").textContent = HRAVE ? "Vyber možnost nebo napiš doplnění." : "Vyberte možnost nebo napište doplnění."; return; }
   if (HRAVE) vybuch(innerWidth / 2, innerHeight * .75, 14);
   uloz(vyber.length ? vyber.join("; ") : "jinak", t);
 };
@@ -330,6 +329,7 @@ $("dalsi").onclick = () => { if (i < Q.length - 1) { i++; vykresli(); } };
 $("poslat").onclick = () => { konec = true; vykresli(); };
 $("znovu").onclick = () => { konec = false; i = 0; vykresli(); };
 
+$("uvod-pocet").textContent = Q.length;
 $("uvod-start").onclick = () => { uvod = false; vykresli(); };
 document.addEventListener("keydown", (e) => {
   if (!HRAVE || konec || uvod || e.target.tagName === "TEXTAREA" || e.ctrlKey || e.metaKey || e.altKey) return;
